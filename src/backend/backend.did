@@ -1,0 +1,1 @@
+service : { hello : (text) -> (text) query; world : (text) -> (text) }
