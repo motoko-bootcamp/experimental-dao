@@ -30,6 +30,7 @@
 		"autoprefixer": "^10.4.16",
 		"eslint": "^8.53.0",
 		"eslint-config-prettier": "^9.0.0",
+		"eslint-plugin-svelte": "^2.35.0",
 		"prettier": "^3.0.3",
 		"prettier-plugin-motoko": "^0.8.1",
 		"prettier-plugin-organize-imports": "^3.2.4",
@@ -41,12 +42,12 @@
 		"tslib": "^2.6.2",
 		"typescript": "^5.2.2",
 		"vite": "^4.5.0",
-		"eslint-plugin-svelte": "^2.35.0",
 		"vite-plugin-compression": "^0.5.1"
 	},
 	"type": "module",
 	"dependencies": {
 		"@dfinity/agent": "^0.19.3",
+		"@dfinity/auth-client": "^0.19.3",
 		"@dfinity/candid": "^0.19.3",
 		"@dfinity/principal": "^0.19.3"
 	}

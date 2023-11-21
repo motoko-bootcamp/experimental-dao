@@ -1,1 +1,12 @@
-service : { hello : (text) -> (text) query; world : (text) -> (text) }
+type Member = record {
+  xp : nat64;
+  "principal" : principal;
+  username : text;
+  level : nat64;
+};
+type MemberError = variant { PrincipalAlreadyRegistered; UsernameExists };
+type Result = variant { Ok : opt Member; Err : MemberError };
+service : {
+  create_member : (text, nat64, nat64) -> (Result);
+  get_all_members : () -> (vec Member) query;
+}

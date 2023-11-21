@@ -18,8 +18,7 @@
 			// Create an actor to interact with the IC for a particular canister ID
 			const actor = createActor(canisterId, { agentOptions: { host } });
 
-			// Call the IC
-			greeting = await actor.hello(input);
+
 		} catch (err: unknown) {
 			console.error(err);
 		}
