@@ -1,6 +1,6 @@
-use candid::{Decode, Encode, Principal, CandidType, Deserialize};
-use ic_stable_structures::{ storable::Bound, Storable };
-use std::{borrow::Cow};
+use candid::{CandidType, Decode, Deserialize, Encode, Principal};
+use ic_stable_structures::{storable::Bound, Storable};
+use std::borrow::Cow;
 
 // pub type Blob = Vec<u8>;
 const MAX_VALUE_SIZE: u32 = 500;
@@ -11,10 +11,21 @@ const MAX_VALUE_SIZE: u32 = 500;
 pub struct Member {
     pub principal: Principal,
     pub username: String,
-	pub xp: u64,
-	level: u64,
-    pub roles: u64
-	// pub token_balance: u64,
+    pub xp: u64,
+    level: u64,
+    pub roles: u64, // pub token_balance: u64,
+}
+
+impl Member {
+    pub fn new(principal: Principal, username: String) -> Member {
+        Self {
+            principal,
+            username,
+            xp: 0,
+            level: 0,
+            roles: 0,
+        }
+    }
 }
 
 #[derive(Clone, CandidType, Deserialize, Ord, Eq, PartialOrd, PartialEq)]
@@ -31,8 +42,7 @@ impl Storable for StablePrincipal {
         max_size: MAX_VALUE_SIZE,
         is_fixed_size: false,
     };
-  }
-
+}
 
 impl Storable for Member {
     fn to_bytes(&self) -> std::borrow::Cow<[u8]> {

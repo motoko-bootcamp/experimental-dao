@@ -3,10 +3,11 @@ type Member = record {
   "principal" : principal;
   username : text;
   level : nat64;
+  roles : nat64;
 };
 type MemberError = variant { PrincipalAlreadyRegistered; UsernameExists };
 type Result = variant { Ok : opt Member; Err : MemberError };
 service : {
-  create_member : (text, nat64, nat64) -> (Result);
+  create_member : (text) -> (Result);
   get_all_members : () -> (vec Member) query;
 }
