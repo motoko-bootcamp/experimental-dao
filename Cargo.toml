@@ -2,4 +2,7 @@
 members = [
     "src/backend",
 ]
+exclude = [
+    "test-logger"
+]
 resolver = "2"
