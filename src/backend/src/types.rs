@@ -12,7 +12,8 @@ pub struct Member {
     pub principal: Principal,
     pub username: String,
 	pub xp: u64,
-	pub level: u64,
+	level: u64,
+    pub roles: u64
 	// pub token_balance: u64,
 }
 
@@ -31,6 +32,7 @@ impl Storable for StablePrincipal {
         is_fixed_size: false,
     };
   }
+
 
 impl Storable for Member {
     fn to_bytes(&self) -> std::borrow::Cow<[u8]> {

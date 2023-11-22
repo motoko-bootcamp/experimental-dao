@@ -1,7 +1,7 @@
 
 use ic_cdk::{query, update, caller};
 use crate::{types::{Member, StablePrincipal}, enums::MemberError};
-use crate::MEMBERS;
+use crate::{MEMBERS, roles};
 use candid::{Principal};
 
 #[update]
@@ -9,6 +9,7 @@ fn create_member(
     username: String,
     xp: u64,
     level: u64,
+    roles: u64
     // token_balance: u64
 ) -> Result<Option<Member>, MemberError> {
     let caller: Principal = caller();
@@ -29,6 +30,7 @@ fn create_member(
         username,
         xp,
         level,
+        roles
         // token_balance,
     };
     insert_member(caller, new_member).map_or(Ok(None), |d| Ok(Some(d)))
