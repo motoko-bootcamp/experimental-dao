@@ -13,12 +13,6 @@ export interface HttpResponse {
   'streaming_strategy' : [] | [StreamingStrategy],
   'status_code' : number,
 }
-export interface IssueData {
-  'title' : string,
-  'body' : string,
-  'state' : string,
-  'number' : bigint,
-}
 export interface Member {
   'xp' : bigint,
   'principal' : Principal,
@@ -34,8 +28,9 @@ export type StreamingStrategy = {
     'Callback' : { 'token' : {}, 'callback' : [Principal, string] }
   };
 export interface _SERVICE {
+  'add_to_log' : ActorMethod<[string], undefined>,
   'create_member' : ActorMethod<[string], Result>,
-  'get_all_issues' : ActorMethod<[], Array<IssueData>>,
   'get_all_members' : ActorMethod<[], Array<Member>>,
+  'get_logs' : ActorMethod<[], Array<string>>,
   'http_request' : ActorMethod<[HttpRequest], HttpResponse>,
 }

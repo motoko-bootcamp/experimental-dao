@@ -1,9 +1,16 @@
 use axum::{routing::post, Router};
-// use flexi_logger::{FileSpec, Logger};
 use std::{collections::HashMap, net::SocketAddr, process::Command};
 
-const CANISTER_ID: &'static str = "3c7jb-myaaa-aaaab-qacoa-cai";
 const METHOD_NAME: &'static str = "add_to_log";
+
+
+struct Issue {
+    number: u64,
+    title: String,
+    body: Option<String>,
+    state: String,
+}
+
 
 fn get_local_backend_canister_id() -> String {
     let source = std::fs::read_to_string("../.dfx/local/canister_ids.json").unwrap();
@@ -13,13 +20,6 @@ fn get_local_backend_canister_id() -> String {
 
 #[tokio::main]
 async fn main() {
-    // Logger::try_with_str("info")
-    //     .unwrap()
-    //     .log_to_file(FileSpec::default().directory("logs").basename("log"))
-    //     .print_message()
-    //     .start()
-    //     .unwrap();
-
     let routes = Router::new().route("/", post(root_post));
 
     let addr = SocketAddr::from(([0, 0, 0, 0], 3000));
@@ -32,6 +32,7 @@ async fn main() {
 
 async fn root_post(body: String) {
     println!("sending {body} to the canister");
+    let canister_id = get_local_backend_canister_id();
     let body = body.replace("\"", "\\\"");
     let body = format!("(\"{body}\")");
     println!("{body}");
@@ -39,11 +40,11 @@ async fn root_post(body: String) {
         .args([
             "canister",
             "call",
-            CANISTER_ID,
+            &canister_id,
             METHOD_NAME,
             &body,
-            "--network",
-            "ic",
+            // "--network",
+            // "ic",
         ])
         .status()
         .unwrap();

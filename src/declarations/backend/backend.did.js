@@ -11,12 +11,6 @@ export const idlFactory = ({ IDL }) => {
     'UsernameExists' : IDL.Null,
   });
   const Result = IDL.Variant({ 'Ok' : IDL.Opt(Member), 'Err' : MemberError });
-  const IssueData = IDL.Record({
-    'title' : IDL.Text,
-    'body' : IDL.Text,
-    'state' : IDL.Text,
-    'number' : IDL.Nat64,
-  });
   const HttpRequest = IDL.Record({
     'url' : IDL.Text,
     'method' : IDL.Text,
@@ -36,10 +30,11 @@ export const idlFactory = ({ IDL }) => {
     'status_code' : IDL.Nat16,
   });
   return IDL.Service({
+    'add_to_log' : IDL.Func([IDL.Text], [], []),
     'create_member' : IDL.Func([IDL.Text], [Result], []),
-    'get_all_issues' : IDL.Func([], [IDL.Vec(IssueData)], ['query']),
     'get_all_members' : IDL.Func([], [IDL.Vec(Member)], ['query']),
-    'http_request' : IDL.Func([HttpRequest], [HttpResponse], ['query']),
+    'get_logs' : IDL.Func([], [IDL.Vec(IDL.Text)], ['query']),
+    'http_request' : IDL.Func([HttpRequest], [HttpResponse], []),
   });
 };
 export const init = ({ IDL }) => { return []; };
