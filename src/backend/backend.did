@@ -10,12 +10,6 @@ type HttpResponse = record {
   streaming_strategy : opt StreamingStrategy;
   status_code : nat16;
 };
-type IssueData = record {
-  title : text;
-  body : text;
-  state : text;
-  number : nat64;
-};
 type Member = record {
   xp : nat64;
   "principal" : principal;
@@ -29,8 +23,9 @@ type StreamingStrategy = variant {
   Callback : record { token : record {}; callback : func () -> () query };
 };
 service : {
+  add_to_log : (text) -> ();
   create_member : (text) -> (Result);
-  get_all_issues : () -> (vec IssueData) query;
   get_all_members : () -> (vec Member) query;
-  http_request : (HttpRequest) -> (HttpResponse) query;
+  get_logs : () -> (vec text) query;
+  http_request : (HttpRequest) -> (HttpResponse);
 }

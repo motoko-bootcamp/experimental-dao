@@ -1,16 +1,19 @@
+use ic_cdk_macros::{export_candid, update};
+use ic_stable_structures::memory_manager::{MemoryId, MemoryManager, VirtualMemory};
 use ic_stable_structures::{DefaultMemoryImpl, StableBTreeMap};
 use std::cell::RefCell;
-use ic_stable_structures::memory_manager::{MemoryId, MemoryManager, VirtualMemory};
-use ic_cdk_macros::export_candid;
 
-use crate::{types::{Member, StablePrincipal}, enums::MemberError};
+use crate::{
+    enums::MemberError,
+    types::{Member, StablePrincipal},
+};
 
-mod types;
 mod enums;
+mod http_request;
 mod member;
 mod roles;
-mod http_request;
-use http_request::{HttpRequest, HttpResponse, IssueData};
+mod types;
+use http_request::{HttpRequest, HttpResponse};
 
 type Memory = VirtualMemory<DefaultMemoryImpl>;
 
@@ -23,8 +26,13 @@ thread_local! {
         )
     );
 
-    pub static ISSUES: RefCell<Vec<IssueData>> = RefCell::new(Vec::new());
+    // pub static ISSUES: RefCell<Vec<IssueData>> = RefCell::new(Vec::new());
     pub static LOGS: RefCell<Vec<String>> = RefCell::new(Vec::new());
+}
+
+#[update]
+fn add_to_log(log: String) {
+    LOGS.with_borrow_mut(|logs| logs.push(log));
 }
 
 export_candid!();

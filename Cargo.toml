@@ -3,6 +3,7 @@ members = [
     "src/backend",
 ]
 exclude = [
-    "test-logger"
+    "test-logger",
+    "http-transmitter",
 ]
 resolver = "2"
