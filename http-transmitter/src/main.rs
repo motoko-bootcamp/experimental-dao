@@ -1,9 +1,15 @@
 use axum::{routing::post, Router};
 // use flexi_logger::{FileSpec, Logger};
-use std::{net::SocketAddr, process::Command};
+use std::{collections::HashMap, net::SocketAddr, process::Command};
 
 const CANISTER_ID: &'static str = "3c7jb-myaaa-aaaab-qacoa-cai";
 const METHOD_NAME: &'static str = "add_to_log";
+
+fn get_local_backend_canister_id() -> String {
+    let source = std::fs::read_to_string("../.dfx/local/canister_ids.json").unwrap();
+    let value: HashMap<String, HashMap<String, String>> = serde_json::from_str(&source).unwrap();
+    value["backend"]["local"].clone()
+}
 
 #[tokio::main]
 async fn main() {
