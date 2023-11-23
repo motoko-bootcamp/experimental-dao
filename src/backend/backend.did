@@ -1,3 +1,21 @@
+type HttpRequest = record {
+  url : text;
+  method : text;
+  body : vec nat8;
+  headers : vec record { text; text };
+};
+type HttpResponse = record {
+  body : vec nat8;
+  headers : vec record { text; text };
+  streaming_strategy : opt StreamingStrategy;
+  status_code : nat16;
+};
+type IssueData = record {
+  title : text;
+  body : text;
+  state : text;
+  number : nat64;
+};
 type Member = record {
   xp : nat64;
   "principal" : principal;
@@ -7,7 +25,12 @@ type Member = record {
 };
 type MemberError = variant { PrincipalAlreadyRegistered; UsernameExists };
 type Result = variant { Ok : opt Member; Err : MemberError };
+type StreamingStrategy = variant {
+  Callback : record { token : record {}; callback : func () -> () query };
+};
 service : {
   create_member : (text) -> (Result);
+  get_all_issues : () -> (vec IssueData) query;
   get_all_members : () -> (vec Member) query;
+  http_request : (HttpRequest) -> (HttpResponse) query;
 }

@@ -6,8 +6,7 @@ all: build
 build:
 	./did.sh
 	dfx generate backend
-	dfx deploy
-	npm run dev
+	dfx deploy backend
 
 run:
 	npm run dev

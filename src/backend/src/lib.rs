@@ -7,8 +7,10 @@ use crate::{types::{Member, StablePrincipal}, enums::MemberError};
 
 mod types;
 mod enums;
-mod member { mod member; }
+mod member;
 mod roles;
+mod http_request;
+use http_request::{HttpRequest, HttpResponse, IssueData};
 
 type Memory = VirtualMemory<DefaultMemoryImpl>;
 
@@ -20,6 +22,9 @@ thread_local! {
             MEMORY_MANAGER.with(|m| m.borrow().get(MemoryId::new(0))),
         )
     );
+
+    pub static ISSUES: RefCell<Vec<IssueData>> = RefCell::new(Vec::new());
+    pub static LOGS: RefCell<Vec<String>> = RefCell::new(Vec::new());
 }
 
 export_candid!();

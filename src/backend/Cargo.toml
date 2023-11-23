@@ -8,7 +8,8 @@ crate-type = ["cdylib"]
 
 [dependencies]
 candid = "0.9.11"
+ic-cdk = "=0.11.3"
 ic-cdk-macros = "0.8.0"
 ic-stable-structures = "0.6.0"
-ic-cdk = "0.11.3"
-serde = "1.0.192"
+serde = { version = "1.0.192", features = ["derive"] }
+serde_json = "1.0"
