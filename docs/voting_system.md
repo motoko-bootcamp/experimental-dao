@@ -64,4 +64,5 @@ voting on    : 0b00011
                = 0b00001 | 0b10010
                = minor change | small feature
 ```
-In this example, Bob has set its personal mask to `0b11111`. That can basically can be though of as _"I want to vote on everything that I am allowed to"_.
+In this example, Bob has set their personal mask to `0b11111`. That can basically can be though of as _"I want to vote on everything that I am allowed to"_.
+
