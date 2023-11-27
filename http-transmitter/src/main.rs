@@ -23,7 +23,7 @@ struct Issue {
     title: String,
     number: u64,
     user: User,
-    // issue.labels: [string] ---- ignore for now,
+    // issue.labels: Vec<string> ---- ignore for now,
     state: State,
     created_at: String, // (date-time) (2023-11-23T15:56:41Z),
     body: Option<String>,

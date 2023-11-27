@@ -1,7 +1,8 @@
 use ic_cdk_macros::{export_candid, update};
 use ic_stable_structures::memory_manager::{MemoryId, MemoryManager, VirtualMemory};
-use ic_stable_structures::{DefaultMemoryImpl, StableBTreeMap, StableCell};
+use ic_stable_structures::{DefaultMemoryImpl, StableBTreeMap, StableVec};
 use std::cell::RefCell;
+use types::{Bounty, Proposal};
 
 use crate::{
     enums::MemberError,
@@ -27,16 +28,15 @@ thread_local! {
         )
     );
 
-    pub static PROPOSALS: RefCell<StableBTreeMap<u64, Proposal, Memory>> = RefCell::new(
-        StableBTreeMap::init(
+    pub static PROPOSALS: RefCell<StableVec<Proposal, Memory>> = RefCell::new(
+        StableVec::init(
             MEMORY_MANAGER.with(|m| m.borrow().get(MemoryId::new(1))),
-        )
+        ).unwrap()
     );
 
-    static NEXT_PROPOSAL_ID: RefCell<StableCell<u64, Memory>> = RefCell::new(
-        StableCell::init(
+    pub static BOUNTIES: RefCell<StableVec<Bounty, Memory>> = RefCell::new(
+        StableVec::init(
             MEMORY_MANAGER.with(|m| m.borrow().get(MemoryId::new(2))),
-            0
         ).unwrap()
     );
 
@@ -50,13 +50,3 @@ fn add_to_log(log: String) {
 }
 
 export_candid!();
-
-// fn main() {
-//     let roy: u64 = roles::CODING_TEAM_MEMBER | roles::CODING_TEAM_ADMIN;
-
-//     let is_roy_a_coding_member = roy & roles::CODING_TEAM_MEMBER != 0;
-//     assert_eq!(is_roy_a_coding_member, true);
-
-//     let is_roy_a_marketing_member = roy & roles::MARKETING_TEAM_MEMBER != 0;
-//     assert_eq!(is_roy_a_marketing_member, false);
-// }

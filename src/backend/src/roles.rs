@@ -7,6 +7,4 @@ pub const MARKETING_TEAM_ADMIN: u64 = 0b100000;
 pub const CODING_TEAM_MEMBER: u64 = 0b1000000;
 pub const CODING_TEAM_ADMIN: u64 = 0b10000000;
 
-
 pub const DAO_ADMIN: u64 = u64::MAX;
-
